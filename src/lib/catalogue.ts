@@ -1,6 +1,6 @@
 import type { Book } from "@/data/sample-library";
 
-export function filterBooks(catalogue: Book[], filters: { q?: string; category?: string; availability?: string }) {
+export function filterBooks(catalogue: Book[], filters: { q?: string | undefined; category?: string | undefined; availability?: string | undefined }) {
   const terms = (filters.q ?? "").trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   return catalogue.filter((book) => {
     const searchable = [book.title, book.author, book.category, book.description, ...book.keywords].join(" ").toLocaleLowerCase();
