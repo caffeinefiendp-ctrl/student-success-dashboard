@@ -6,12 +6,12 @@ import { BookCard } from "@/components/shelf/BookCard";
 import { books, categories } from "@/data/sample-library";
 import { cn } from "@/lib/utils";
 
-type S = { q?: string; category?: string };
+type S = { q?: string | undefined; category?: string | undefined };
 
 export const Route = createFileRoute("/discover")({
   validateSearch: (s: Record<string, unknown>): S => ({
-    q: typeof s.q === "string" ? s.q : undefined,
-    category: typeof s.category === "string" ? s.category : undefined,
+    q: typeof s["q"] === "string" ? s["q"] : undefined,
+    category: typeof s["category"] === "string" ? s["category"] : undefined,
   }),
   head: () => ({
     meta: [
