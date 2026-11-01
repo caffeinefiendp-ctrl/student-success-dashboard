@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep the fictional catalogue in the shared sample-library module, with inventory fields on every book; all pages use the same records to prevent conflicting demo availability.
+- Keep overview recommendations as a curated four-book subset of the catalogue so catalogue growth does not change the dashboard layout.
+- Keep catalogue filtering in a browser-safe pure helper and URL-validated search state so search, filters and browser navigation remain consistent and testable.
