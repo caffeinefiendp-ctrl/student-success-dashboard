@@ -73,8 +73,6 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   const [q, setQ] = useState("");
   const [unread, setUnread] = useState(true);
   const navigate = useNavigate();
-  const hour = new Date().getHours();
-  const greet = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
   return (
     <div className="flex min-h-screen w-full bg-background">
@@ -94,7 +92,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             <Menu className="h-5 w-5" />
           </button>
           <div className="min-w-0">
-            <h1 className="truncate text-base font-bold md:text-lg" suppressHydrationWarning>{greet}, {student.first}!</h1>
+            <h1 className="truncate text-base font-bold md:text-lg" suppressHydrationWarning>Good evening, {student.first}!</h1>
             <p className="hidden text-xs text-muted-foreground sm:block">Saturday, October 31 · Here’s your reading at a glance</p>
           </div>
           <form

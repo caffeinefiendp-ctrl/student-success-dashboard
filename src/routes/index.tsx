@@ -42,7 +42,7 @@ const toneTile = {
 function Overview() {
   const [q, setQ] = useState("");
   const navigate = useNavigate();
-  const loan = borrowed[0];
+  const loan = borrowed[0]!;
   const loanBook = getBook(loan.bookId);
   const pct = Math.round(((loan.totalDays - loan.daysLeft) / loan.totalDays) * 100);
 
@@ -61,7 +61,7 @@ function Overview() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              if (!q.trim()) return toast("Type a book, author, subject or question first.");
+              if (!q.trim()) { toast("Type a book, author, subject or question first."); return; }
               navigate({ to: "/discover", search: { q: q.trim() } });
             }}
             className="mt-7 flex flex-col gap-2 rounded-2xl bg-card p-2 shadow-lift sm:flex-row"
