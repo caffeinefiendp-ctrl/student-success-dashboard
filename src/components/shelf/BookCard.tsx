@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Bookmark, BookmarkCheck, Star } from "lucide-react";
+import { Bookmark, BookmarkCheck, MapPin, Star } from "lucide-react";
 import { toast } from "sonner";
 import type { Book } from "@/data/sample-library";
 import { BookCover } from "./BookCover";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { floorLabel } from "@/lib/catalogue";
 
 export function AvailabilityBadge({ value }: { value: Book["availability"] }) {
   return (
@@ -41,7 +42,10 @@ export function BookCard({ book }: { book: Book }) {
           <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
             <BookCover book={book} />
           </div>
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
+            title={saved ? "Remove from saved" : "Save book"}
             aria-label={saved ? "Remove from saved" : "Save book"}
             onClick={() => {
               setSaved(!saved);
@@ -50,13 +54,15 @@ export function BookCard({ book }: { book: Book }) {
             className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-card/90 text-foreground shadow-card backdrop-blur transition hover:bg-card"
           >
             {saved ? <BookmarkCheck className="h-4 w-4 text-primary" /> : <Bookmark className="h-4 w-4" />}
-          </button>
+          </Button>
         </div>
         <div className="flex flex-1 flex-col gap-2 p-4">
           <span className="text-xs font-semibold uppercase tracking-wider text-primary">{book.category}</span>
           <h3 className="line-clamp-2 font-semibold leading-snug">{book.title}</h3>
           <p className="line-clamp-1 text-sm text-muted-foreground">{book.author}</p>
-          <div className="mt-auto flex items-center justify-between pt-3">
+          <p className="text-xs text-muted-foreground">{book.availableCopies} of {book.totalCopies} copies available</p>
+          <p className="flex items-start gap-1 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5 shrink-0" />{floorLabel(book.floor)} · Rack {book.rack}</p>
+          <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
             <AvailabilityBadge value={book.availability} />
             <Button size="sm" variant="outline" onClick={() => setOpen(true)}>View Details</Button>
           </div>
@@ -64,7 +70,7 @@ export function BookCard({ book }: { book: Book }) {
       </article>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-h-[90dvh] max-w-2xl overflow-y-auto">
           <div className="grid gap-6 sm:grid-cols-[180px_1fr]">
             <div className="mx-auto aspect-[3/4] w-40 overflow-hidden rounded-xl shadow-lift sm:w-full">
               <BookCover book={book} />
@@ -77,16 +83,26 @@ export function BookCard({ book }: { book: Book }) {
               </DialogHeader>
               <p className="text-sm leading-relaxed text-muted-foreground">{book.description}</p>
               <dl className="grid grid-cols-2 gap-3 rounded-xl bg-muted p-3 text-sm">
+                <div><dt className="text-muted-foreground">Edition</dt><dd className="font-medium">{book.edition}</dd></div>
                 <div><dt className="text-muted-foreground">Published</dt><dd className="font-medium">{book.year}</dd></div>
                 <div><dt className="text-muted-foreground">Pages</dt><dd className="font-medium">{book.pages}</dd></div>
-                <div><dt className="text-muted-foreground">Shelf</dt><dd className="font-medium">{book.shelf}</dd></div>
+                <div><dt className="text-muted-foreground">Book ID</dt><dd className="break-words font-medium">{book.id}</dd></div>
                 <div><dt className="text-muted-foreground">Rating</dt><dd className="flex items-center gap-1 font-medium"><Star className="h-3.5 w-3.5 fill-warning text-warning" />{book.rating}</dd></div>
               </dl>
-              <div className="flex items-center justify-between gap-3">
-                <AvailabilityBadge value={book.availability} />
+              <div className="space-y-2 border-y py-3 text-sm">
+                <p className="flex items-center gap-2 font-semibold"><MapPin className="h-4 w-4 text-primary" />Physical location</p>
+                <dl className="grid grid-cols-2 gap-3">
+                  <div><dt className="text-muted-foreground">Floor</dt><dd>{floorLabel(book.floor)}</dd></div>
+                  <div><dt className="text-muted-foreground">Section</dt><dd>{book.section}</dd></div>
+                  <div><dt className="text-muted-foreground">Rack</dt><dd>{book.rack}</dd></div>
+                  <div><dt className="text-muted-foreground">Shelf</dt><dd>{book.shelf}</dd></div>
+                </dl>
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="space-y-1"><AvailabilityBadge value={book.availability} /><p className="text-xs text-muted-foreground">{book.availableCopies} of {book.totalCopies} copies available</p></div>
                 <Button onClick={request}>{book.availability === "Waitlist" ? "Join Waitlist" : "Request to Borrow"}</Button>
               </div>
-              <p className="text-xs text-muted-foreground">Sample data — availability is illustrative, not live.</p>
+              <p className="text-xs text-muted-foreground">Fictional demonstration inventory — copies, availability and shelf locations are not real-time library information. Additional cover artwork is illustrative.</p>
             </div>
           </div>
         </DialogContent>

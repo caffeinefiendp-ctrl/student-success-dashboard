@@ -7,7 +7,7 @@ import { DashboardShell } from "@/components/shelf/DashboardShell";
 import { BookCard } from "@/components/shelf/BookCard";
 import { BookCover } from "@/components/shelf/BookCover";
 import { Button } from "@/components/ui/button";
-import { books, borrowed, categories, getBook } from "@/data/sample-library";
+import { recommendedBooks, borrowed, categories, getBook } from "@/data/sample-library";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -42,7 +42,8 @@ const toneTile = {
 function Overview() {
   const [q, setQ] = useState("");
   const navigate = useNavigate();
-  const loan = borrowed[0]!;
+  const loan = borrowed[0];
+  if (!loan) return null;
   const loanBook = getBook(loan.bookId);
   const pct = Math.round(((loan.totalDays - loan.daysLeft) / loan.totalDays) * 100);
 
@@ -103,7 +104,7 @@ function Overview() {
           <Link to="/discover" className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline">See all <ArrowRight className="h-4 w-4" /></Link>
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {books.map((b) => <BookCard key={b.id} book={b} />)}
+          {recommendedBooks.map((b) => <BookCard key={b.id} book={b} />)}
         </div>
       </section>
 

@@ -1,81 +1,98 @@
-// SAMPLE DATA ONLY — not connected to any real library catalogue or database.
+// FICTIONAL DEMONSTRATION DATA — not a live library inventory.
 import coverAi from "@/assets/cover-ai.jpg";
 import coverClean from "@/assets/cover-cleancode.jpg";
 import coverDeep from "@/assets/cover-deeplearning.jpg";
+import cover0 from "@/assets/catalogue/python-crash-course.jpg";
+import cover4 from "@/assets/catalogue/introduction-algorithms.jpg";
+import cover5 from "@/assets/catalogue/computer-systems.jpg";
+import cover6 from "@/assets/catalogue/operating-systems.jpg";
+import cover7 from "@/assets/catalogue/computer-networks.jpg";
+import cover8 from "@/assets/catalogue/design-data-applications.jpg";
+import cover9 from "@/assets/catalogue/pragmatic-programmer.jpg";
+import cover10 from "@/assets/catalogue/fluent-python.jpg";
+import cover11 from "@/assets/catalogue/eloquent-javascript.jpg";
+import cover12 from "@/assets/catalogue/effective-java.jpg";
+import cover13 from "@/assets/catalogue/c-programming.jpg";
+import cover14 from "@/assets/catalogue/rust-programming.jpg";
+import cover15 from "@/assets/catalogue/hands-on-ml.jpg";
+import cover16 from "@/assets/catalogue/pattern-recognition.jpg";
+import cover17 from "@/assets/catalogue/isl.jpg";
+import cover18 from "@/assets/catalogue/rl-introduction.jpg";
+import cover19 from "@/assets/catalogue/linear-algebra.jpg";
+import cover20 from "@/assets/catalogue/calculus.jpg";
+import cover21 from "@/assets/catalogue/discrete-mathematics.jpg";
+import cover22 from "@/assets/catalogue/probability.jpg";
+import cover23 from "@/assets/catalogue/how-prove.jpg";
+import cover24 from "@/assets/catalogue/fundamentals-physics.jpg";
+import cover25 from "@/assets/catalogue/feynman-lectures.jpg";
+import cover26 from "@/assets/catalogue/quantum-mechanics.jpg";
+import cover27 from "@/assets/catalogue/brief-history-time.jpg";
+import cover28 from "@/assets/catalogue/university-physics.jpg";
+import cover29 from "@/assets/catalogue/campbell-biology.jpg";
+import cover30 from "@/assets/catalogue/chemistry-central.jpg";
+import cover31 from "@/assets/catalogue/selfish-gene.jpg";
+import cover32 from "@/assets/catalogue/silent-spring.jpg";
+import cover33 from "@/assets/catalogue/lean-startup.jpg";
+import cover34 from "@/assets/catalogue/principles-economics.jpg";
+import cover35 from "@/assets/catalogue/good-great.jpg";
+import cover36 from "@/assets/catalogue/intelligent-investor.jpg";
+import cover37 from "@/assets/catalogue/sapiens.jpg";
+import cover38 from "@/assets/catalogue/factfulness.jpg";
+import cover39 from "@/assets/catalogue/short-history.jpg";
 
 export type Availability = "Available" | "Limited" | "Waitlist";
-
 export interface Book {
-  id: string;
-  title: string;
-  author: string;
-  category: string;
-  availability: Availability;
-  cover?: string;
-  year: number;
-  pages: number;
-  shelf: string;
-  rating: number;
-  description: string;
+  id: string; title: string; author: string; category: string; edition: string;
+  availability: Availability; cover: string; availableCopies: number; totalCopies: number;
+  floor: number; section: string; rack: string; shelf: string;
+  year: number; pages: number; rating: number; description: string; keywords: string[];
 }
-
 export const books: Book[] = [
-  {
-    id: "python-crash-course",
-    title: "Python Crash Course",
-    author: "Eric Matthes",
-    category: "Computer Science",
-    availability: "Available",
-    year: 2023,
-    pages: 552,
-    shelf: "CS · 005.133 MAT",
-    rating: 4.7,
-    description:
-      "A hands-on, project-based introduction to programming with Python — from basics to building games, data visualisations and web apps.",
-  },
-  {
-    id: "ai-modern-approach",
-    title: "Artificial Intelligence: A Modern Approach",
-    author: "Stuart Russell and Peter Norvig",
-    category: "Artificial Intelligence",
-    availability: "Limited",
-    cover: coverAi,
-    year: 2020,
-    pages: 1136,
-    shelf: "AI · 006.3 RUS",
-    rating: 4.8,
-    description:
-      "The definitive textbook on AI covering search, reasoning, planning, machine learning, perception and the ethics of intelligent systems.",
-  },
-  {
-    id: "clean-code",
-    title: "Clean Code",
-    author: "Robert C. Martin",
-    category: "Computer Science",
-    availability: "Available",
-    cover: coverClean,
-    year: 2008,
-    pages: 464,
-    shelf: "CS · 005.1 MAR",
-    rating: 4.6,
-    description:
-      "A handbook of agile software craftsmanship: principles, patterns and practices for writing readable, maintainable code.",
-  },
-  {
-    id: "deep-learning",
-    title: "Deep Learning",
-    author: "Ian Goodfellow, Yoshua Bengio and Aaron Courville",
-    category: "Artificial Intelligence",
-    availability: "Waitlist",
-    cover: coverDeep,
-    year: 2016,
-    pages: 800,
-    shelf: "AI · 006.31 GOO",
-    rating: 4.5,
-    description:
-      "A comprehensive introduction to deep learning — the mathematical foundations, modern architectures and research perspectives.",
-  },
+{"id": "python-crash-course", "title": "Python Crash Course", "author": "Eric Matthes", "category": "Computer Science", "edition": "3rd", "availability": "Available", "availableCopies": 4, "totalCopies": 6, "floor": 1, "section": "Computing", "rack": "CS-01", "shelf": "CS · 005.133 MAT", "year": 2023, "pages": 552, "rating": 4.7, "description": "A project-based introduction to Python, programming fundamentals, games, data visualization and web applications.", "keywords": ["python", "beginner", "coding", "projects"], "cover": cover0},
+{"id": "ai-modern-approach", "title": "Artificial Intelligence: A Modern Approach", "author": "Stuart Russell and Peter Norvig", "category": "Artificial Intelligence", "edition": "4th", "availability": "Limited", "availableCopies": 1, "totalCopies": 4, "floor": 2, "section": "AI & Machine Learning", "rack": "AI-01", "shelf": "AI · 006.3 RUS", "year": 2020, "pages": 1136, "rating": 4.8, "description": "A comprehensive study of intelligent agents, search, reasoning, planning, machine learning and AI ethics.", "keywords": ["ai", "ml", "agents", "robotics", "search"], "cover": coverAi},
+{"id": "clean-code", "title": "Clean Code", "author": "Robert C. Martin", "category": "Computer Science", "edition": "1st", "availability": "Available", "availableCopies": 3, "totalCopies": 5, "floor": 1, "section": "Computing", "rack": "CS-01", "shelf": "CS · 005.1 MAR", "year": 2008, "pages": 464, "rating": 4.6, "description": "Principles and practices for readable, maintainable software, refactoring and agile craftsmanship.", "keywords": ["software", "engineering", "refactoring", "testing"], "cover": coverClean},
+{"id": "deep-learning", "title": "Deep Learning", "author": "Ian Goodfellow, Yoshua Bengio and Aaron Courville", "category": "Artificial Intelligence", "edition": "1st", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 3, "floor": 2, "section": "AI & Machine Learning", "rack": "AI-01", "shelf": "AI · 006.31 GOO", "year": 2016, "pages": 800, "rating": 4.5, "description": "Mathematical foundations, neural networks, optimization and research perspectives in deep learning.", "keywords": ["ai", "ml", "neural", "networks", "machine", "learning"], "cover": coverDeep},
+{"id": "introduction-algorithms", "title": "Introduction to Algorithms", "author": "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest and Clifford Stein", "category": "Computer Science", "edition": "4th", "availability": "Available", "availableCopies": 5, "totalCopies": 8, "floor": 1, "section": "Computing", "rack": "CS-01", "shelf": "CS · 128 STE", "year": 2022, "pages": 1312, "rating": 4.7, "description": "A rigorous guide to algorithms, data structures, graph traversal and computational complexity.", "keywords": ["algorithms", "sorting", "graphs", "data", "structures"], "cover": cover4},
+{"id": "computer-systems", "title": "Computer Systems: A Programmer’s Perspective", "author": "Randal E. Bryant and David R. O’Hallaron", "category": "Computer Science", "edition": "3rd", "availability": "Available", "availableCopies": 2, "totalCopies": 6, "floor": 1, "section": "Computing", "rack": "CS-01", "shelf": "CS · 135 O’H", "year": 2015, "pages": 1120, "rating": 4.8, "description": "Explore machine-level code, memory, processors and the systems behind application performance.", "keywords": ["architecture", "memory", "operating", "systems"], "cover": cover5},
+{"id": "operating-systems", "title": "Operating System Concepts", "author": "Abraham Silberschatz, Peter B. Galvin and Greg Gagne", "category": "Computer Science", "edition": "10th", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 4, "floor": 1, "section": "Computing", "rack": "CS-01", "shelf": "CS · 142 GAG", "year": 2018, "pages": 976, "rating": 4.3, "description": "Processes, threads, synchronization, virtual memory and storage in modern operating systems.", "keywords": ["os", "concurrency", "linux", "processes"], "cover": cover6},
+{"id": "computer-networks", "title": "Computer Networking: A Top-Down Approach", "author": "James F. Kurose and Keith W. Ross", "category": "Computer Science", "edition": "8th", "availability": "Available", "availableCopies": 4, "totalCopies": 5, "floor": 1, "section": "Computing", "rack": "CS-01", "shelf": "CS · 149 ROS", "year": 2021, "pages": 800, "rating": 4.4, "description": "Internet protocols, application layers, routing and security through a top-down approach.", "keywords": ["networks", "tcp", "ip", "internet", "security"], "cover": cover7},
+{"id": "design-data-applications", "title": "Designing Data-Intensive Applications", "author": "Martin Kleppmann", "category": "Computer Science", "edition": "1st", "availability": "Limited", "availableCopies": 1, "totalCopies": 3, "floor": 1, "section": "Computing", "rack": "CS-02", "shelf": "CS · 156 KLE", "year": 2017, "pages": 616, "rating": 4.5, "description": "Design reliable distributed systems with replication, partitioning, transactions and stream processing.", "keywords": ["databases", "distributed", "systems", "scalability"], "cover": cover8},
+{"id": "pragmatic-programmer", "title": "The Pragmatic Programmer", "author": "David Thomas and Andrew Hunt", "category": "Programming", "edition": "20th Anniversary", "availability": "Available", "availableCopies": 3, "totalCopies": 8, "floor": 1, "section": "Programming", "rack": "PR-02", "shelf": "PR · 163 HUN", "year": 2019, "pages": 352, "rating": 4.6, "description": "Practical techniques for effective software development, debugging, automation and adaptable code.", "keywords": ["coding", "development", "debugging"], "cover": cover9},
+{"id": "fluent-python", "title": "Fluent Python", "author": "Luciano Ramalho", "category": "Programming", "edition": "2nd", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 6, "floor": 1, "section": "Programming", "rack": "PR-02", "shelf": "PR · 170 RAM", "year": 2022, "pages": 1014, "rating": 4.7, "description": "Use Python’s data model, iterators, typing and concurrency to write idiomatic applications.", "keywords": ["python", "advanced", "coding", "concurrency"], "cover": cover10},
+{"id": "eloquent-javascript", "title": "Eloquent JavaScript", "author": "Marijn Haverbeke", "category": "Programming", "edition": "4th", "availability": "Available", "availableCopies": 4, "totalCopies": 4, "floor": 1, "section": "Programming", "rack": "PR-02", "shelf": "PR · 177 HAV", "year": 2024, "pages": 456, "rating": 4.8, "description": "Learn JavaScript through functions, objects, browser interfaces and complete programming projects.", "keywords": ["javascript", "web", "frontend", "coding"], "cover": cover11},
+{"id": "effective-java", "title": "Effective Java", "author": "Joshua Bloch", "category": "Programming", "edition": "3rd", "availability": "Available", "availableCopies": 2, "totalCopies": 5, "floor": 1, "section": "Programming", "rack": "PR-02", "shelf": "PR · 184 BLO", "year": 2018, "pages": 416, "rating": 4.3, "description": "Proven practices for Java APIs, generics, lambdas, concurrency and object-oriented design.", "keywords": ["java", "oop", "coding", "generics"], "cover": cover12},
+{"id": "c-programming", "title": "The C Programming Language", "author": "Brian W. Kernighan and Dennis M. Ritchie", "category": "Programming", "edition": "2nd", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 3, "floor": 1, "section": "Programming", "rack": "PR-02", "shelf": "PR · 191 RIT", "year": 1988, "pages": 272, "rating": 4.4, "description": "The classic introduction to C, pointers, structures and systems programming.", "keywords": ["c", "pointers", "systems", "coding"], "cover": cover13},
+{"id": "rust-programming", "title": "The Rust Programming Language", "author": "Steve Klabnik and Carol Nichols", "category": "Programming", "edition": "2nd", "availability": "Available", "availableCopies": 4, "totalCopies": 8, "floor": 1, "section": "Programming", "rack": "PR-02", "shelf": "PR · 198 NIC", "year": 2023, "pages": 560, "rating": 4.5, "description": "Ownership, borrowing, safe concurrency and practical application development in Rust.", "keywords": ["rust", "memory", "safety", "coding"], "cover": cover14},
+{"id": "hands-on-ml", "title": "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow", "author": "Aurélien Géron", "category": "Artificial Intelligence", "edition": "3rd", "availability": "Limited", "availableCopies": 1, "totalCopies": 6, "floor": 2, "section": "AI & Machine Learning", "rack": "AI-02", "shelf": "AI · 205 GÉR", "year": 2022, "pages": 856, "rating": 4.6, "description": "Build supervised learning models, ensembles and neural networks with practical Python examples.", "keywords": ["ai", "ml", "machine", "learning", "python", "tensorflow"], "cover": cover15},
+{"id": "pattern-recognition", "title": "Pattern Recognition and Machine Learning", "author": "Christopher M. Bishop", "category": "Artificial Intelligence", "edition": "1st", "availability": "Available", "availableCopies": 3, "totalCopies": 4, "floor": 2, "section": "AI & Machine Learning", "rack": "AI-03", "shelf": "AI · 212 BIS", "year": 2006, "pages": 738, "rating": 4.7, "description": "Probabilistic modeling, Bayesian inference, classification and statistical learning methods.", "keywords": ["ai", "ml", "statistics", "bayesian"], "cover": cover16},
+{"id": "isl", "title": "An Introduction to Statistical Learning", "author": "Gareth James, Daniela Witten, Trevor Hastie and Robert Tibshirani", "category": "Artificial Intelligence", "edition": "2nd", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 5, "floor": 2, "section": "AI & Machine Learning", "rack": "AI-03", "shelf": "AI · 219 TIB", "year": 2021, "pages": 607, "rating": 4.8, "description": "Accessible statistical learning methods including regression, classification and resampling.", "keywords": ["ai", "ml", "statistics", "regression", "data", "science"], "cover": cover17},
+{"id": "rl-introduction", "title": "Reinforcement Learning: An Introduction", "author": "Richard S. Sutton and Andrew G. Barto", "category": "Artificial Intelligence", "edition": "2nd", "availability": "Available", "availableCopies": 3, "totalCopies": 3, "floor": 2, "section": "AI & Machine Learning", "rack": "AI-03", "shelf": "AI · 226 BAR", "year": 2018, "pages": 552, "rating": 4.3, "description": "Learn reward-based decision making, temporal-difference learning and policy optimization.", "keywords": ["ai", "ml", "reinforcement", "agents", "rewards"], "cover": cover18},
+{"id": "linear-algebra", "title": "Introduction to Linear Algebra", "author": "Gilbert Strang", "category": "Mathematics", "edition": "6th", "availability": "Available", "availableCopies": 2, "totalCopies": 8, "floor": 2, "section": "Mathematics", "rack": "MA-03", "shelf": "MA · 233 STR", "year": 2023, "pages": 432, "rating": 4.4, "description": "Vectors, matrices, linear systems, eigenvalues and applications of linear algebra.", "keywords": ["matrices", "vectors", "algebra", "mathematics"], "cover": cover19},
+{"id": "calculus", "title": "Calculus: Early Transcendentals", "author": "James Stewart", "category": "Mathematics", "edition": "8th", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 6, "floor": 2, "section": "Mathematics", "rack": "MA-03", "shelf": "MA · 240 STE", "year": 2016, "pages": 1368, "rating": 4.5, "description": "Differential and integral calculus, infinite series and multivariable methods.", "keywords": ["calculus", "derivatives", "integrals", "mathematics"], "cover": cover20},
+{"id": "discrete-mathematics", "title": "Discrete Mathematics and Its Applications", "author": "Kenneth H. Rosen", "category": "Mathematics", "edition": "8th", "availability": "Available", "availableCopies": 4, "totalCopies": 4, "floor": 2, "section": "Mathematics", "rack": "MA-03", "shelf": "MA · 247 ROS", "year": 2019, "pages": 1072, "rating": 4.6, "description": "Logic, proofs, combinatorics, graph theory and discrete structures for computing.", "keywords": ["discrete", "logic", "proofs", "mathematics"], "cover": cover21},
+{"id": "probability", "title": "Introduction to Probability", "author": "Joseph K. Blitzstein and Jessica Hwang", "category": "Mathematics", "edition": "2nd", "availability": "Limited", "availableCopies": 1, "totalCopies": 5, "floor": 2, "section": "Mathematics", "rack": "MA-03", "shelf": "MA · 254 HWA", "year": 2019, "pages": 620, "rating": 4.7, "description": "Probability distributions, conditional expectation and random processes with worked examples.", "keywords": ["probability", "statistics", "randomness", "mathematics"], "cover": cover22},
+{"id": "how-prove", "title": "How to Prove It", "author": "Daniel J. Velleman", "category": "Mathematics", "edition": "3rd", "availability": "Available", "availableCopies": 3, "totalCopies": 3, "floor": 2, "section": "Mathematics", "rack": "MA-03", "shelf": "MA · 261 VEL", "year": 2019, "pages": 468, "rating": 4.8, "description": "A structured introduction to logic, sets and mathematical proof techniques.", "keywords": ["proofs", "logic", "sets", "mathematics"], "cover": cover23},
+{"id": "fundamentals-physics", "title": "Fundamentals of Physics", "author": "David Halliday, Robert Resnick and Jearl Walker", "category": "Physics", "edition": "12th", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 8, "floor": 3, "section": "Physics", "rack": "PH-04", "shelf": "PH · 268 WAL", "year": 2021, "pages": 1328, "rating": 4.3, "description": "Mechanics, waves, thermodynamics, electricity and modern physics with problem-solving examples.", "keywords": ["physics", "mechanics", "electricity", "waves"], "cover": cover24},
+{"id": "feynman-lectures", "title": "The Feynman Lectures on Physics, Volume I", "author": "Richard P. Feynman, Robert B. Leighton and Matthew Sands", "category": "Physics", "edition": "New Millennium", "availability": "Available", "availableCopies": 5, "totalCopies": 6, "floor": 3, "section": "Physics", "rack": "PH-04", "shelf": "PH · 275 SAN", "year": 2011, "pages": 560, "rating": 4.4, "description": "A conceptual exploration of mechanics, radiation, heat and the principles of physical law.", "keywords": ["physics", "mechanics", "thermodynamics"], "cover": cover25},
+{"id": "quantum-mechanics", "title": "Introduction to Quantum Mechanics", "author": "David J. Griffiths and Darrell F. Schroeter", "category": "Physics", "edition": "3rd", "availability": "Available", "availableCopies": 2, "totalCopies": 4, "floor": 3, "section": "Physics", "rack": "PH-04", "shelf": "PH · 282 SCH", "year": 2018, "pages": 508, "rating": 4.5, "description": "Wave functions, the Schrödinger equation, quantum states and approximation techniques.", "keywords": ["physics", "quantum", "particles"], "cover": cover26},
+{"id": "brief-history-time", "title": "A Brief History of Time", "author": "Stephen Hawking", "category": "Physics", "edition": "Updated", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 5, "floor": 3, "section": "Physics", "rack": "PH-04", "shelf": "PH · 289 HAW", "year": 1998, "pages": 212, "rating": 4.6, "description": "An accessible journey through cosmology, black holes, space-time and the origin of the universe.", "keywords": ["physics", "astronomy", "cosmology", "space"], "cover": cover27},
+{"id": "university-physics", "title": "University Physics with Modern Physics", "author": "Hugh D. Young and Roger A. Freedman", "category": "Physics", "edition": "15th", "availability": "Available", "availableCopies": 3, "totalCopies": 3, "floor": 3, "section": "Physics", "rack": "PH-04", "shelf": "PH · 296 FRE", "year": 2020, "pages": 1600, "rating": 4.7, "description": "A university-level introduction to classical mechanics, electromagnetism and modern physics.", "keywords": ["physics", "mechanics", "electromagnetism"], "cover": cover28},
+{"id": "campbell-biology", "title": "Campbell Biology", "author": "Lisa A. Urry, Michael L. Cain, Steven A. Wasserman, Peter V. Minorsky and Rebecca B. Orr", "category": "Science", "edition": "12th", "availability": "Limited", "availableCopies": 1, "totalCopies": 8, "floor": 3, "section": "Natural Sciences", "rack": "SC-04", "shelf": "SC · 303 ORR", "year": 2021, "pages": 1488, "rating": 4.8, "description": "Cell biology, genetics, evolution, ecology and the diversity of life.", "keywords": ["science", "biology", "genetics", "ecology"], "cover": cover29},
+{"id": "chemistry-central", "title": "Chemistry: The Central Science", "author": "Theodore L. Brown, H. Eugene LeMay Jr. and Bruce E. Bursten", "category": "Science", "edition": "14th", "availability": "Available", "availableCopies": 3, "totalCopies": 6, "floor": 3, "section": "Natural Sciences", "rack": "SC-04", "shelf": "SC · 310 BUR", "year": 2018, "pages": 1248, "rating": 4.3, "description": "Atoms, chemical bonding, reactions, equilibrium and the foundations of general chemistry.", "keywords": ["science", "chemistry", "reactions", "atoms"], "cover": cover30},
+{"id": "selfish-gene", "title": "The Selfish Gene", "author": "Richard Dawkins", "category": "Science", "edition": "40th Anniversary", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 4, "floor": 3, "section": "Natural Sciences", "rack": "SC-04", "shelf": "SC · 317 DAW", "year": 2016, "pages": 496, "rating": 4.4, "description": "Explore evolutionary biology through the gene-centered view of natural selection.", "keywords": ["science", "evolution", "biology", "genetics"], "cover": cover31},
+{"id": "silent-spring", "title": "Silent Spring", "author": "Rachel Carson", "category": "Science", "edition": "40th Anniversary", "availability": "Available", "availableCopies": 5, "totalCopies": 5, "floor": 3, "section": "Natural Sciences", "rack": "SC-05", "shelf": "SC · 324 CAR", "year": 2002, "pages": 400, "rating": 4.5, "description": "A landmark account of pesticides and their effects on ecosystems and public health.", "keywords": ["science", "environment", "ecology", "conservation"], "cover": cover32},
+{"id": "lean-startup", "title": "The Lean Startup", "author": "Eric Ries", "category": "Business", "edition": "1st", "availability": "Available", "availableCopies": 2, "totalCopies": 3, "floor": 1, "section": "Business & Economics", "rack": "BU-05", "shelf": "BU · 331 RIE", "year": 2011, "pages": 336, "rating": 4.6, "description": "Build and test new businesses through validated learning and iterative product development.", "keywords": ["business", "entrepreneurship", "startup", "management"], "cover": cover33},
+{"id": "principles-economics", "title": "Principles of Economics", "author": "N. Gregory Mankiw", "category": "Business", "edition": "9th", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 8, "floor": 1, "section": "Business & Economics", "rack": "BU-05", "shelf": "BU · 338 MAN", "year": 2021, "pages": 864, "rating": 4.7, "description": "Core economic principles covering markets, incentives, policy and macroeconomic activity.", "keywords": ["business", "economics", "markets", "finance"], "cover": cover34},
+{"id": "good-great", "title": "Good to Great", "author": "Jim Collins", "category": "Business", "edition": "1st", "availability": "Available", "availableCopies": 4, "totalCopies": 6, "floor": 1, "section": "Business & Economics", "rack": "BU-05", "shelf": "BU · 345 COL", "year": 2001, "pages": 320, "rating": 4.8, "description": "Research-based insights into leadership, disciplined teams and sustained business performance.", "keywords": ["business", "leadership", "strategy", "management"], "cover": cover35},
+{"id": "intelligent-investor", "title": "The Intelligent Investor", "author": "Benjamin Graham", "category": "Business", "edition": "Revised", "availability": "Limited", "availableCopies": 1, "totalCopies": 4, "floor": 1, "section": "Business & Economics", "rack": "BU-05", "shelf": "BU · 352 GRA", "year": 2003, "pages": 640, "rating": 4.3, "description": "Value investing, risk management and long-term financial decision making.", "keywords": ["business", "finance", "investing", "markets"], "cover": cover36},
+{"id": "sapiens", "title": "Sapiens: A Brief History of Humankind", "author": "Yuval Noah Harari", "category": "General Knowledge", "edition": "1st English", "availability": "Available", "availableCopies": 3, "totalCopies": 5, "floor": 0, "section": "General Reference", "rack": "GK-05", "shelf": "GK · 359 HAR", "year": 2014, "pages": 464, "rating": 4.4, "description": "A broad history of human societies from early hunter-gatherers to modern civilization.", "keywords": ["history", "humanity", "anthropology", "general", "knowledge"], "cover": cover37},
+{"id": "factfulness", "title": "Factfulness", "author": "Hans Rosling, Ola Rosling and Anna Rosling Rönnlund", "category": "General Knowledge", "edition": "1st", "availability": "Waitlist", "availableCopies": 0, "totalCopies": 3, "floor": 0, "section": "General Reference", "rack": "GK-05", "shelf": "GK · 366 RÖN", "year": 2018, "pages": 352, "rating": 4.5, "description": "Use data and critical thinking to challenge common misconceptions about the world.", "keywords": ["general", "knowledge", "statistics", "world", "critical", "thinking"], "cover": cover38},
+{"id": "short-history", "title": "A Short History of Nearly Everything", "author": "Bill Bryson", "category": "General Knowledge", "edition": "1st", "availability": "Available", "availableCopies": 5, "totalCopies": 8, "floor": 0, "section": "General Reference", "rack": "GK-05", "shelf": "GK · 373 BRY", "year": 2003, "pages": 544, "rating": 4.6, "description": "An engaging tour of scientific discoveries, Earth’s history and the people behind them.", "keywords": ["general", "knowledge", "history", "science", "discovery"], "cover": cover39},
 ];
+
+export const catalogueCategories = [...new Set(books.map((book) => book.category))];
+export const availabilityOptions: Availability[] = ["Available", "Limited", "Waitlist"];
+export const recommendedBooks = books.slice(0, 4);
 
 export const categories = [
   { name: "Computer Science", count: 1240, icon: "Code2", tone: "primary" },
@@ -98,4 +115,8 @@ export const requests = [
 
 export const student = { name: "Alex Morgan", first: "Alex", id: "STU-20481", program: "B.Sc. Computer Science, Year 2", email: "alex.morgan@university.edu" };
 
-export const getBook = (id: string) => books.find((b) => b.id === id)!;
+export const getBook = (id: string) => (() => {
+  const book = books.find((b) => b.id === id);
+  if (!book) throw new Error(`Unknown sample book: ${id}`);
+  return book;
+})();
