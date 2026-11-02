@@ -4,7 +4,8 @@ import { Inbox } from "lucide-react";
 import { toast } from "sonner";
 import { DashboardShell, PageHeader } from "@/components/shelf/DashboardShell";
 import { Button } from "@/components/ui/button";
-import { getBook, requests as initial } from "@/data/sample-library";
+import { student } from "@/data/sample-library";
+import { useLibrary } from "@/components/shelf/LibraryProvider";
 
 export const Route = createFileRoute("/requests")({
   head: () => ({
@@ -21,10 +22,11 @@ export const Route = createFileRoute("/requests")({
 });
 
 function Requests() {
-  const [list, setList] = useState(initial);
+  const { state, act } = useLibrary();
+  const list = state.requests.filter(r => r.studentId === student.id);
   return (
     <DashboardShell>
-      <PageHeader title="My Requests" subtitle={`${list.length} pending request${list.length === 1 ? "" : "s"}`}>
+      <PageHeader title="My Requests" subtitle={`${list.filter(r => r.status === "Pending").length} pending · ${list.length} total requests`}>
         <Button asChild><Link to="/discover">New request</Link></Button>
       </PageHeader>
       {list.length === 0 ? (
@@ -35,16 +37,17 @@ function Requests() {
       ) : (
         <div className="overflow-hidden rounded-2xl border bg-card shadow-card">
           {list.map((r) => {
-            const b = "bookId" in r && r.bookId ? getBook(r.bookId) : null;
+            const b = state.books.find(b => b.id === r.bookId);
             return (
               <div key={r.id} className="flex flex-col gap-3 border-b p-5 last:border-0 sm:flex-row sm:items-center">
                 <div className="flex-1">
                   <p className="text-xs font-semibold text-primary">{r.id}</p>
-                  <p className="font-semibold">{b?.title ?? ("title" in r ? r.title : "")}</p>
-                  <p className="text-sm text-muted-foreground">{b?.author ?? ("author" in r ? r.author : "")} · Requested {r.requested}</p>
+                  <p className="font-semibold">{b?.title ?? "Removed title"}</p>
+                  <p className="text-sm text-muted-foreground">{b?.author} · {r.type} · Requested {r.requestedOn}</p>
                 </div>
                 <span className="w-fit rounded-full bg-accent/12 px-3 py-1 text-xs font-semibold text-accent">{r.status}</span>
-                <Button variant="ghost" onClick={() => { setList((l) => l.filter((x) => x.id !== r.id)); toast("Request cancelled"); }}>Cancel</Button>
+                {r.reason && <p className="text-xs text-destructive">{r.reason}</p>}
+                {r.status === "Pending" && <Button variant="ghost" onClick={() => act({ type: "cancel", requestId: r.id }, "Request cancelled")}>Cancel</Button>}
               </div>
             );
           })}

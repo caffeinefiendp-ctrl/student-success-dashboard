@@ -7,7 +7,9 @@ import { DashboardShell } from "@/components/shelf/DashboardShell";
 import { BookCard } from "@/components/shelf/BookCard";
 import { BookCover } from "@/components/shelf/BookCover";
 import { Button } from "@/components/ui/button";
-import { recommendedBooks, borrowed, categories, getBook } from "@/data/sample-library";
+import { recommendedBooks as curated, categories, student } from "@/data/sample-library";
+import { useLibrary } from "@/components/shelf/LibraryProvider";
+import { daysRemaining } from "@/lib/library-state";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -42,10 +44,15 @@ const toneTile = {
 function Overview() {
   const [q, setQ] = useState("");
   const navigate = useNavigate();
-  const loan = borrowed[0];
-  if (!loan) return null;
-  const loanBook = getBook(loan.bookId);
-  const pct = Math.round(((loan.totalDays - loan.daysLeft) / loan.totalDays) * 100);
+  const { state, act } = useLibrary();
+  const borrowed = state.loans.filter(l => l.studentId === student.id && !l.returnedOn);
+  const loan = [...borrowed].sort((a,b) => a.dueDate.localeCompare(b.dueDate))[0];
+  const loanBook = state.books.find(b => b.id === loan?.bookId);
+  const remaining = loan ? daysRemaining(loan.dueDate) : 0;
+  const totalDays = loan ? Math.max(1, (Date.parse(loan.dueDate) - Date.parse(loan.issueDate))/86400000) : 1;
+  const pct = Math.min(100, Math.max(0, Math.round((totalDays - remaining)/totalDays*100)));
+  const recommendedBooks = curated.flatMap(b => { const live = state.books.find(x => x.id === b.id); return live ? [live] : []; });
+  const statValues = [borrowed.length, borrowed.filter(l => daysRemaining(l.dueDate) <= 7).length, state.requests.filter(r => r.studentId === student.id && r.status === "Pending").length, 12];
 
   return (
     <DashboardShell>
@@ -83,12 +90,12 @@ function Overview() {
 
       {/* Stats */}
       <section className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {stats.map((s) => (
+        {stats.map((s, i) => (
           <Link key={s.label} to={s.to} className="card-lift rounded-2xl border bg-card p-5 shadow-card">
             <div className={cn("grid h-11 w-11 place-items-center rounded-xl", s.tone)}>
               <s.icon className="h-5 w-5" />
             </div>
-            <p className="mt-4 text-3xl font-extrabold tracking-tight">{s.value}</p>
+            <p className="mt-4 text-3xl font-extrabold tracking-tight">{statValues[i]}</p>
             <p className="text-sm text-muted-foreground">{s.label}</p>
           </Link>
         ))}
@@ -124,7 +131,7 @@ function Overview() {
                 >
                   <Icon className="h-7 w-7" />
                   <p className="mt-8 font-semibold text-foreground">{c.name}</p>
-                  <p className="text-xs text-muted-foreground">{c.count.toLocaleString()} titles</p>
+                  <p className="text-xs text-muted-foreground">{state.books.filter(b => b.category === c.name).length} titles</p>
                   <Icon className="absolute -bottom-4 -right-4 h-24 w-24 opacity-10 transition-transform group-hover:scale-110" />
                 </Link>
               );
@@ -135,19 +142,19 @@ function Overview() {
         {/* Upcoming return */}
         <section>
           <h3 className="mb-5 text-xl font-bold tracking-tight">Upcoming Returns</h3>
-          <div className="rounded-2xl border bg-card p-5 shadow-card">
+          {loan && loanBook ? <div className="rounded-2xl border bg-card p-5 shadow-card">
             <div className="flex gap-4">
               <div className="h-28 w-20 shrink-0 overflow-hidden rounded-lg shadow-card"><BookCover book={loanBook} /></div>
               <div className="min-w-0">
                 <p className="font-semibold">{loanBook.title}</p>
                 <p className="text-sm text-muted-foreground">{loanBook.author}</p>
-                <span className="mt-2 inline-flex rounded-full bg-warning/15 px-2.5 py-1 text-xs font-semibold">Due in {loan.daysLeft} days</span>
+                <span className="mt-2 inline-flex rounded-full bg-warning/15 px-2.5 py-1 text-xs font-semibold">{remaining < 0 ? `${-remaining} days overdue` : `Due in ${remaining} days`}</span>
               </div>
             </div>
             <div className="mt-5">
               <div className="mb-2 flex justify-between text-xs text-muted-foreground">
-                <span>Borrowed {loan.borrowedOn}</span>
-                <span className="font-semibold text-foreground">Due {loan.due}</span>
+                <span>Borrowed {loan.issueDate}</span>
+                <span className="font-semibold text-foreground">Due {loan.dueDate}</span>
               </div>
               <div className="h-2.5 overflow-hidden rounded-full bg-muted">
                 <div className="h-full rounded-full bg-gradient-brand" style={{ width: `${pct}%` }} />
@@ -155,10 +162,10 @@ function Overview() {
               <p className="mt-2 text-xs text-muted-foreground">{pct}% of loan period used</p>
             </div>
             <div className="mt-5 grid grid-cols-2 gap-2">
-              <Button variant="outline" onClick={() => toast.success("Renewal requested (demo)", { description: "You’ll be notified once it’s approved." })}>Renew</Button>
+              <Button variant="outline" disabled={state.requests.some(r => r.loanId === loan.id && r.status === "Pending")} onClick={() => act({ type: "request", bookId: loan.bookId, studentId: student.id, loanId: loan.id }, "Renewal requested")}>Renew</Button>
               <Button onClick={() => navigate({ to: "/my-books" })}>View loans</Button>
             </div>
-          </div>
+          </div> : <p className="py-8 text-muted-foreground">No upcoming returns.</p>}
         </section>
       </div>
     </DashboardShell>

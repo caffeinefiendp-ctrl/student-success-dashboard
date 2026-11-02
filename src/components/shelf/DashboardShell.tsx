@@ -1,12 +1,15 @@
 import { useState, type ReactNode } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Bell, BookMarked, Compass, LayoutDashboard, LibraryBig, LogOut, Menu, Search, Settings, Sparkles, User, Inbox } from "lucide-react";
+import { Bell, BookMarked, Compass, LayoutDashboard, LibraryBig, LogOut, Menu, Search, Settings, Sparkles, User, Inbox, ArrowLeftRight, Users, BarChart3 } from "lucide-react";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { student } from "@/data/sample-library";
 import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { useLibrary } from './LibraryProvider';
+import { day, daysRemaining } from '@/lib/library-state';
 
 const main = [
   { to: "/", label: "Overview", icon: LayoutDashboard },
@@ -19,10 +22,19 @@ const bottom = [
   { to: "/profile", label: "Profile", icon: User },
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
+const librarianMain = [
+  { to: '/librarian', label: 'Overview', icon: LayoutDashboard },
+  { to: '/librarian/inventory', label: 'Inventory', icon: LibraryBig },
+  { to: '/librarian/circulation', label: 'Issue & Return', icon: ArrowLeftRight },
+  { to: '/librarian/requests', label: 'Requests', icon: Inbox },
+  { to: '/librarian/students', label: 'Students', icon: Users },
+  { to: '/librarian/reports', label: 'Reports', icon: BarChart3 },
+] as const;
 
 function NavList({ onNavigate }: { onNavigate?: () => void }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
-  const item = (n: (typeof main)[number] | (typeof bottom)[number]) => {
+  const librarian = path.startsWith('/librarian');
+  const item = (n: (typeof main)[number] | (typeof bottom)[number] | (typeof librarianMain)[number]) => {
     const active = path === n.to;
     return (
       <Link
@@ -51,13 +63,13 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
         </span>
       </Link>
       <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-widest text-sidebar-foreground/60">Menu</p>
-      <nav className="flex flex-col gap-1">{main.map(item)}</nav>
+      <nav className="flex flex-col gap-1">{(librarian ? librarianMain : main).map(item)}</nav>
       <div className="mt-auto rounded-2xl bg-sidebar-accent p-4 text-sm">
         <Sparkles className="mb-2 h-5 w-5 text-accent" />
-        <p className="font-semibold text-sidebar-accent-foreground">Ask the AI assistant</p>
-        <p className="mt-1 text-xs text-sidebar-foreground">Get reading suggestions for any subject.</p>
+        <p className="font-semibold text-sidebar-accent-foreground">{librarian ? 'Library operations' : 'Ask the AI assistant'}</p>
+        <p className="mt-1 text-xs text-sidebar-foreground">{librarian ? 'Fictional library · Demo view' : 'Get reading suggestions for any subject.'}</p>
       </div>
-      <nav className="mt-4 flex flex-col gap-1 border-t border-sidebar-border pt-4">{bottom.map(item)}</nav>
+      <nav className="mt-4 flex flex-col gap-1 border-t border-sidebar-border pt-4">{!librarian && bottom.map(item)}</nav>
     </div>
   );
 }
@@ -69,6 +81,13 @@ const notifications = [
 ];
 
 export function DashboardShell({ children }: { children: ReactNode }) {
+  const path = useRouterState({ select: s => s.location.pathname });
+  const librarian = path.startsWith('/librarian');
+  const { state } = useLibrary();
+  const notifications = [
+    ...state.loans.filter(l => l.studentId === student.id && !l.returnedOn && daysRemaining(l.dueDate) <= 7).map(l => ({ t: `${state.books.find(b => b.id === l.bookId)?.title ?? 'Book'} · ${daysRemaining(l.dueDate) < 0 ? 'Overdue' : 'Due soon'}`, s: `Return by ${l.dueDate}` })),
+    ...state.requests.filter(r => r.studentId === student.id).slice(0, 3).map(r => ({ t: `${r.type} request ${r.status.toLowerCase()}`, s: r.reason ?? r.id })),
+  ];
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const [unread, setUnread] = useState(true);
@@ -88,24 +107,25 @@ export function DashboardShell({ children }: { children: ReactNode }) {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b bg-background/85 px-4 backdrop-blur md:px-8">
-          <button aria-label="Open menu" onClick={() => setOpen(true)} className="grid h-10 w-10 place-items-center rounded-xl border bg-card lg:hidden">
+          <Button variant="outline" size="icon" aria-label="Open menu" onClick={() => setOpen(true)} className="shrink-0 lg:hidden">
             <Menu className="h-5 w-5" />
-          </button>
+          </Button>
           <div className="min-w-0">
-            <h1 className="truncate text-base font-bold md:text-lg" suppressHydrationWarning>Good evening, {student.first}!</h1>
-            <p className="hidden text-xs text-muted-foreground sm:block">Saturday, October 31 · Here’s your reading at a glance</p>
+            <h1 className="truncate text-base font-bold md:text-lg">{librarian ? 'Librarian workspace' : `Good evening, ${student.first}!`}</h1>
+            <p className="hidden text-xs text-muted-foreground sm:block">{day()} · {librarian ? 'Library operations · Demo' : 'Here’s your reading at a glance'}</p>
           </div>
+          <Button asChild variant="outline" size="sm" className="ml-auto shrink-0"><Link to={librarian ? '/' : '/librarian'}><ArrowLeftRight className="h-4 w-4" /><span className="hidden sm:inline">{librarian ? 'Student demo' : 'Librarian demo'}</span><span className="sm:hidden">{librarian ? 'Student' : 'Librarian'}</span></Link></Button>
           <form
             onSubmit={(e) => {
               e.preventDefault();
               navigate({ to: "/discover", search: { q } });
             }}
-            className="ml-auto hidden w-72 items-center gap-2 rounded-xl border bg-card px-3 py-2 md:flex"
+            className="hidden w-52 items-center gap-2 rounded-xl border bg-card px-3 py-2 xl:flex"
           >
             <Search className="h-4 w-4 text-muted-foreground" />
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Quick search…" className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
           </form>
-          <Link to="/discover" aria-label="Search" className="ml-auto grid h-10 w-10 place-items-center rounded-xl border bg-card md:hidden">
+          <Link to="/discover" aria-label="Search" className="hidden h-10 w-10 shrink-0 place-items-center rounded-xl border bg-card md:grid xl:hidden">
             <Search className="h-4 w-4" />
           </Link>
           <Popover onOpenChange={(o) => o && setUnread(false)}>
@@ -125,7 +145,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           </Popover>
           <DropdownMenu>
             <DropdownMenuTrigger aria-label="Account" className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-brand text-sm font-bold text-primary-foreground">
-              AM
+              {librarian ? 'LB' : 'AM'}
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>

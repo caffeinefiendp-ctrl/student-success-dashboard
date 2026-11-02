@@ -12,3 +12,6 @@
 - Keep the fictional catalogue in the shared sample-library module, with inventory fields on every book; all pages use the same records to prevent conflicting demo availability.
 - Keep overview recommendations as a curated four-book subset of the catalogue so catalogue growth does not change the dashboard layout.
 - Keep catalogue filtering in a browser-safe pure helper and URL-validated search state so search, filters and browser navigation remain consistent and testable.
+- Use LibraryProvider and the pure library-state transitions for all demo inventory, circulation, requests and activity; session storage preserves frontend-only changes without claiming hosted persistence.
+- Keep librarian screens in dedicated /librarian routes using the existing DashboardShell with a separate menu; demo switching is not authentication or a permission boundary.
+- Derive availability from copy counts and keep total minus available equal to active loans; validate transitions atomically to prevent contradictory demo records.

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Bookmark, BookmarkCheck, MapPin, Star } from "lucide-react";
 import { toast } from "sonner";
-import type { Book } from "@/data/sample-library";
+import { student, type Book } from "@/data/sample-library";
 import { BookCover } from "./BookCover";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { floorLabel } from "@/lib/catalogue";
+import { useLibrary } from './LibraryProvider';
 
 export function AvailabilityBadge({ value }: { value: Book["availability"] }) {
   return (
@@ -26,19 +27,17 @@ export function AvailabilityBadge({ value }: { value: Book["availability"] }) {
 
 export function BookCard({ book }: { book: Book }) {
   const [open, setOpen] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const { state, act } = useLibrary();
+  const saved = state.saved.includes(book.id);
 
   const request = () => {
-    toast.success(book.availability === "Waitlist" ? "Added to waitlist (demo)" : "Borrow request sent (demo)", {
-      description: book.title,
-    });
-    setOpen(false);
+    if (act({ type: 'request', bookId: book.id, studentId: student.id }, 'Borrow request sent to the demo librarian')) setOpen(false);
   };
 
   return (
     <>
       <article className="card-lift group flex flex-col overflow-hidden rounded-2xl border bg-card shadow-card">
-        <div className="relative aspect-[3/4] overflow-hidden bg-muted">
+        <div className="relative aspect-[2/3] overflow-hidden bg-muted">
           <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
             <BookCover book={book} />
           </div>
@@ -48,8 +47,7 @@ export function BookCard({ book }: { book: Book }) {
             title={saved ? "Remove from saved" : "Save book"}
             aria-label={saved ? "Remove from saved" : "Save book"}
             onClick={() => {
-              setSaved(!saved);
-              toast(saved ? "Removed from saved" : "Saved to your reading list");
+              act({ type: 'save', bookId: book.id }, saved ? 'Removed from saved' : 'Saved to your reading list');
             }}
             className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-card/90 text-foreground shadow-card backdrop-blur transition hover:bg-card"
           >
@@ -72,7 +70,7 @@ export function BookCard({ book }: { book: Book }) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[90dvh] max-w-2xl overflow-y-auto">
           <div className="grid gap-6 sm:grid-cols-[180px_1fr]">
-            <div className="mx-auto aspect-[3/4] w-40 overflow-hidden rounded-xl shadow-lift sm:w-full">
+            <div className="mx-auto aspect-[2/3] w-40 overflow-hidden rounded-xl shadow-lift sm:w-full">
               <BookCover book={book} />
             </div>
             <div className="flex flex-col gap-3">
@@ -102,7 +100,8 @@ export function BookCard({ book }: { book: Book }) {
                 <div className="space-y-1"><AvailabilityBadge value={book.availability} /><p className="text-xs text-muted-foreground">{book.availableCopies} of {book.totalCopies} copies available</p></div>
                 <Button onClick={request}>{book.availability === "Waitlist" ? "Join Waitlist" : "Request to Borrow"}</Button>
               </div>
-              <p className="text-xs text-muted-foreground">Fictional demonstration inventory — copies, availability and shelf locations are not real-time library information. Additional cover artwork is illustrative.</p>
+              {book.availableCopies === 0 && <div className="border-t pt-3"><p className="text-sm font-semibold">Available alternatives</p>{state.books.filter(b => b.category === book.category && b.availableCopies > 0 && b.id !== book.id).slice(0, 3).map(b => <div key={b.id} className="mt-2 flex items-center justify-between gap-2 text-xs"><span>{b.title} · {b.availableCopies} available · Rack {b.rack}</span><Button size="sm" variant="outline" onClick={() => act({ type: 'request', bookId: b.id, studentId: student.id }, 'Alternative book requested')}>Request</Button></div>)}{!state.books.some(b => b.category === book.category && b.availableCopies > 0) && <p className="text-xs text-muted-foreground">No available alternatives in this category.</p>}</div>}
+              <p className="text-xs text-muted-foreground">Fictional demonstration inventory — copies, availability and shelf locations are not real-time library information. Some cover artwork is illustrative.</p>
             </div>
           </div>
         </DialogContent>
