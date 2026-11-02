@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { filterBooks } from "@/lib/catalogue";
 import { cn } from "@/lib/utils";
+import { useLibrary } from '@/components/shelf/LibraryProvider';
 
 const searchSchema = z.object({
   q: fallback(z.string(), "").optional(),
@@ -33,6 +34,9 @@ export const Route = createFileRoute("/discover")({
 });
 
 function Discover() {
+  const { state } = useLibrary();
+  const books = state.books;
+  const catalogueCategories = [...new Set(books.map(b => b.category))];
   const { q = "", category, availability } = Route.useSearch();
   const navigate = useNavigate({ from: "/discover" });
   const [text, setText] = useState(q);
