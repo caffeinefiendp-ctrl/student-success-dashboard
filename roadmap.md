@@ -1,5 +1,6 @@
-# Catalogue extension
-- [x] Expand fictional catalogue to at least 35 books with covers and full inventory records.
-- [x] Extend Discover search, category/availability filters and clear filters.
-- [x] Expand book details while preserving dashboard and existing interactions.
-- [x] Test catalogue rules and verify desktop/mobile search and details.
+# Connected ShelfSense demo
+- [ ] Create shared session demo inventory, loans, requests and activity.
+- [ ] Complete student discovery, loans, requests and assistant interactions.
+- [ ] Add separate librarian overview, inventory, circulation, requests, students and reports.
+- [ ] Preserve appearance and add demo role switching and distinct covers.
+- [ ] Test inventory rules and verify connected flows and responsive pages.
