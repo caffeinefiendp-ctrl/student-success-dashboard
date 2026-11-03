@@ -12,10 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as DiscoverRouteImport } from './routes/discover'
+import { Route as LibrarianRouteImport } from './routes/librarian'
 import { Route as MyBooksRouteImport } from './routes/my-books'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RequestsRouteImport } from './routes/requests'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as LibrarianIndexRouteImport } from './routes/librarian.index'
+import { Route as LibrarianInventoryRouteImport } from './routes/librarian.inventory'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -30,6 +33,11 @@ const AssistantRoute = AssistantRouteImport.update({
 const DiscoverRoute = DiscoverRouteImport.update({
   id: '/discover',
   path: '/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibrarianRoute = LibrarianRouteImport.update({
+  id: '/librarian',
+  path: '/librarian',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyBooksRoute = MyBooksRouteImport.update({
@@ -52,15 +60,28 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LibrarianIndexRoute = LibrarianIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LibrarianRoute,
+} as any)
+const LibrarianInventoryRoute = LibrarianInventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => LibrarianRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assistant': typeof AssistantRoute
   '/discover': typeof DiscoverRoute
+  '/librarian': typeof LibrarianRouteWithChildren
   '/my-books': typeof MyBooksRoute
   '/profile': typeof ProfileRoute
   '/requests': typeof RequestsRoute
   '/settings': typeof SettingsRoute
+  '/librarian/inventory': typeof LibrarianInventoryRoute
+  '/librarian/': typeof LibrarianIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,16 +91,21 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/requests': typeof RequestsRoute
   '/settings': typeof SettingsRoute
+  '/librarian/inventory': typeof LibrarianInventoryRoute
+  '/librarian': typeof LibrarianIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/assistant': typeof AssistantRoute
   '/discover': typeof DiscoverRoute
+  '/librarian': typeof LibrarianRouteWithChildren
   '/my-books': typeof MyBooksRoute
   '/profile': typeof ProfileRoute
   '/requests': typeof RequestsRoute
   '/settings': typeof SettingsRoute
+  '/librarian/inventory': typeof LibrarianInventoryRoute
+  '/librarian/': typeof LibrarianIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,10 +113,13 @@ export interface FileRouteTypes {
     | '/'
     | '/assistant'
     | '/discover'
+    | '/librarian'
     | '/my-books'
     | '/profile'
     | '/requests'
     | '/settings'
+    | '/librarian/inventory'
+    | '/librarian/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,21 +129,27 @@ export interface FileRouteTypes {
     | '/profile'
     | '/requests'
     | '/settings'
+    | '/librarian/inventory'
+    | '/librarian'
   id:
     | '__root__'
     | '/'
     | '/assistant'
     | '/discover'
+    | '/librarian'
     | '/my-books'
     | '/profile'
     | '/requests'
     | '/settings'
+    | '/librarian/inventory'
+    | '/librarian/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssistantRoute: typeof AssistantRoute
   DiscoverRoute: typeof DiscoverRoute
+  LibrarianRoute: typeof LibrarianRouteWithChildren
   MyBooksRoute: typeof MyBooksRoute
   ProfileRoute: typeof ProfileRoute
   RequestsRoute: typeof RequestsRoute
@@ -142,6 +177,13 @@ declare module '@tanstack/react-router' {
       path: '/discover'
       fullPath: '/discover'
       preLoaderRoute: typeof DiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/librarian': {
+      id: '/librarian'
+      path: '/librarian'
+      fullPath: '/librarian'
+      preLoaderRoute: typeof LibrarianRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-books': {
@@ -172,13 +214,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/librarian/': {
+      id: '/librarian/'
+      path: '/'
+      fullPath: '/librarian/'
+      preLoaderRoute: typeof LibrarianIndexRouteImport
+      parentRoute: typeof LibrarianRoute
+    }
+    '/librarian/inventory': {
+      id: '/librarian/inventory'
+      path: '/inventory'
+      fullPath: '/librarian/inventory'
+      preLoaderRoute: typeof LibrarianInventoryRouteImport
+      parentRoute: typeof LibrarianRoute
+    }
   }
 }
+
+interface LibrarianRouteChildren {
+  LibrarianInventoryRoute: typeof LibrarianInventoryRoute
+  LibrarianIndexRoute: typeof LibrarianIndexRoute
+}
+
+const LibrarianRouteChildren: LibrarianRouteChildren = {
+  LibrarianInventoryRoute: LibrarianInventoryRoute,
+  LibrarianIndexRoute: LibrarianIndexRoute,
+}
+
+const LibrarianRouteWithChildren = LibrarianRoute._addFileChildren(
+  LibrarianRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssistantRoute: AssistantRoute,
   DiscoverRoute: DiscoverRoute,
+  LibrarianRoute: LibrarianRouteWithChildren,
   MyBooksRoute: MyBooksRoute,
   ProfileRoute: ProfileRoute,
   RequestsRoute: RequestsRoute,
