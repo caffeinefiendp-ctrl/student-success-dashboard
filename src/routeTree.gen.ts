@@ -18,7 +18,11 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RequestsRouteImport } from './routes/requests'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as LibrarianIndexRouteImport } from './routes/librarian.index'
+import { Route as LibrarianCirculationRouteImport } from './routes/librarian.circulation'
 import { Route as LibrarianInventoryRouteImport } from './routes/librarian.inventory'
+import { Route as LibrarianReportsRouteImport } from './routes/librarian.reports'
+import { Route as LibrarianRequestsRouteImport } from './routes/librarian.requests'
+import { Route as LibrarianStudentsRouteImport } from './routes/librarian.students'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -65,9 +69,29 @@ const LibrarianIndexRoute = LibrarianIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LibrarianRoute,
 } as any)
+const LibrarianCirculationRoute = LibrarianCirculationRouteImport.update({
+  id: '/circulation',
+  path: '/circulation',
+  getParentRoute: () => LibrarianRoute,
+} as any)
 const LibrarianInventoryRoute = LibrarianInventoryRouteImport.update({
   id: '/inventory',
   path: '/inventory',
+  getParentRoute: () => LibrarianRoute,
+} as any)
+const LibrarianReportsRoute = LibrarianReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => LibrarianRoute,
+} as any)
+const LibrarianRequestsRoute = LibrarianRequestsRouteImport.update({
+  id: '/requests',
+  path: '/requests',
+  getParentRoute: () => LibrarianRoute,
+} as any)
+const LibrarianStudentsRoute = LibrarianStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
   getParentRoute: () => LibrarianRoute,
 } as any)
 
@@ -80,7 +104,11 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/requests': typeof RequestsRoute
   '/settings': typeof SettingsRoute
+  '/librarian/circulation': typeof LibrarianCirculationRoute
   '/librarian/inventory': typeof LibrarianInventoryRoute
+  '/librarian/reports': typeof LibrarianReportsRoute
+  '/librarian/requests': typeof LibrarianRequestsRoute
+  '/librarian/students': typeof LibrarianStudentsRoute
   '/librarian/': typeof LibrarianIndexRoute
 }
 export interface FileRoutesByTo {
@@ -91,7 +119,11 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/requests': typeof RequestsRoute
   '/settings': typeof SettingsRoute
+  '/librarian/circulation': typeof LibrarianCirculationRoute
   '/librarian/inventory': typeof LibrarianInventoryRoute
+  '/librarian/reports': typeof LibrarianReportsRoute
+  '/librarian/requests': typeof LibrarianRequestsRoute
+  '/librarian/students': typeof LibrarianStudentsRoute
   '/librarian': typeof LibrarianIndexRoute
 }
 export interface FileRoutesById {
@@ -104,7 +136,11 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/requests': typeof RequestsRoute
   '/settings': typeof SettingsRoute
+  '/librarian/circulation': typeof LibrarianCirculationRoute
   '/librarian/inventory': typeof LibrarianInventoryRoute
+  '/librarian/reports': typeof LibrarianReportsRoute
+  '/librarian/requests': typeof LibrarianRequestsRoute
+  '/librarian/students': typeof LibrarianStudentsRoute
   '/librarian/': typeof LibrarianIndexRoute
 }
 export interface FileRouteTypes {
@@ -118,7 +154,11 @@ export interface FileRouteTypes {
     | '/profile'
     | '/requests'
     | '/settings'
+    | '/librarian/circulation'
     | '/librarian/inventory'
+    | '/librarian/reports'
+    | '/librarian/requests'
+    | '/librarian/students'
     | '/librarian/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -129,7 +169,11 @@ export interface FileRouteTypes {
     | '/profile'
     | '/requests'
     | '/settings'
+    | '/librarian/circulation'
     | '/librarian/inventory'
+    | '/librarian/reports'
+    | '/librarian/requests'
+    | '/librarian/students'
     | '/librarian'
   id:
     | '__root__'
@@ -141,7 +185,11 @@ export interface FileRouteTypes {
     | '/profile'
     | '/requests'
     | '/settings'
+    | '/librarian/circulation'
     | '/librarian/inventory'
+    | '/librarian/reports'
+    | '/librarian/requests'
+    | '/librarian/students'
     | '/librarian/'
   fileRoutesById: FileRoutesById
 }
@@ -221,6 +269,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibrarianIndexRouteImport
       parentRoute: typeof LibrarianRoute
     }
+    '/librarian/circulation': {
+      id: '/librarian/circulation'
+      path: '/circulation'
+      fullPath: '/librarian/circulation'
+      preLoaderRoute: typeof LibrarianCirculationRouteImport
+      parentRoute: typeof LibrarianRoute
+    }
     '/librarian/inventory': {
       id: '/librarian/inventory'
       path: '/inventory'
@@ -228,16 +283,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibrarianInventoryRouteImport
       parentRoute: typeof LibrarianRoute
     }
+    '/librarian/reports': {
+      id: '/librarian/reports'
+      path: '/reports'
+      fullPath: '/librarian/reports'
+      preLoaderRoute: typeof LibrarianReportsRouteImport
+      parentRoute: typeof LibrarianRoute
+    }
+    '/librarian/requests': {
+      id: '/librarian/requests'
+      path: '/requests'
+      fullPath: '/librarian/requests'
+      preLoaderRoute: typeof LibrarianRequestsRouteImport
+      parentRoute: typeof LibrarianRoute
+    }
+    '/librarian/students': {
+      id: '/librarian/students'
+      path: '/students'
+      fullPath: '/librarian/students'
+      preLoaderRoute: typeof LibrarianStudentsRouteImport
+      parentRoute: typeof LibrarianRoute
+    }
   }
 }
 
 interface LibrarianRouteChildren {
+  LibrarianCirculationRoute: typeof LibrarianCirculationRoute
   LibrarianInventoryRoute: typeof LibrarianInventoryRoute
+  LibrarianReportsRoute: typeof LibrarianReportsRoute
+  LibrarianRequestsRoute: typeof LibrarianRequestsRoute
+  LibrarianStudentsRoute: typeof LibrarianStudentsRoute
   LibrarianIndexRoute: typeof LibrarianIndexRoute
 }
 
 const LibrarianRouteChildren: LibrarianRouteChildren = {
+  LibrarianCirculationRoute: LibrarianCirculationRoute,
   LibrarianInventoryRoute: LibrarianInventoryRoute,
+  LibrarianReportsRoute: LibrarianReportsRoute,
+  LibrarianRequestsRoute: LibrarianRequestsRoute,
+  LibrarianStudentsRoute: LibrarianStudentsRoute,
   LibrarianIndexRoute: LibrarianIndexRoute,
 }
 
