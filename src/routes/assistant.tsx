@@ -3,7 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Send, Sparkles } from "lucide-react";
 import { DashboardShell, PageHeader } from "@/components/shelf/DashboardShell";
 import { Button } from "@/components/ui/button";
-import { books } from "@/data/sample-library";
 import { cn } from "@/lib/utils";
 import { useLibrary } from '@/components/shelf/LibraryProvider';
 import { assistantReply } from '@/lib/assistant';
@@ -25,15 +24,6 @@ export const Route = createFileRoute("/assistant")({
 type Msg = { role: "user" | "ai"; text: string };
 const prompts = ["Best book to start learning Python?", "Suggest something on neural networks", "How do I write better code?"];
 
-// Demo responder: keyword-matches the sample catalogue. Not a real AI model yet.
-function reply(q: string): string {
-  const t = q.toLowerCase();
-  const hit = books.find((b) => [b.title, b.category, b.description].some((f) => t.split(/\W+/).some((w) => w.length > 3 && f.toLowerCase().includes(w))));
-  return hit
-    ? `From the sample catalogue, I’d suggest “${hit.title}” by ${hit.author}. ${hit.description}`
-    : "I couldn’t find a match in the sample catalogue. Try asking about Python, AI, deep learning or clean code.";
-}
-
 function Assistant() {
   const { state } = useLibrary();
   const end = useRef<HTMLDivElement>(null);
@@ -42,7 +32,8 @@ function Assistant() {
   useEffect(() => end.current?.scrollIntoView({ block: 'nearest' }), [msgs]);
   const send = (q: string) => {
     if (!q.trim()) return;
-    const previous = state.books.find(b => msgs.slice().reverse().some(m => m.role === 'ai' && m.text.includes(`“${b.title}”`)));
+    const lastAnswer = msgs.slice().reverse().find(m => m.role === 'ai' && m.text.includes('“'));
+    const previous = state.books.find(b => lastAnswer?.text.includes(`“${b.title}”`));
     setMsgs((m) => [...m, { role: "user", text: q }, { role: "ai", text: assistantReply(q, state, previous?.id) }]);
     setText("");
   };
