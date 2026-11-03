@@ -1,0 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { DashboardShell, PageHeader } from '@/components/shelf/DashboardShell';
+import { LibraryReports } from '@/components/shelf/LibraryReports';
+export const Route=createFileRoute('/librarian/reports')({head:()=>({meta:[{title:'Library Reports · ShelfSense'},{name:'description',content:'Sample borrowing trends, inventory totals and overdue reports.'},{property:'og:title',content:'Library Reports · ShelfSense'},{property:'og:description',content:'Sample borrowing trends, inventory totals and overdue reports.'},{property:'og:type',content:'website'},{name:'twitter:card',content:'summary'}]}),component:Reports});
+function Reports(){return <DashboardShell><PageHeader title="Library Reports" subtitle="Derived from the shared fictional inventory and loan records"/><LibraryReports/></DashboardShell>;}

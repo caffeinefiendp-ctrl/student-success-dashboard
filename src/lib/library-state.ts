@@ -1,7 +1,7 @@
 import { books, student, type Book } from '@/data/sample-library';
 
 export interface Loan { id: string; studentId: string; bookId: string; issueDate: string; dueDate: string; returnedOn?: string; reminder?: boolean }
-export interface LibraryRequest { id: string; studentId: string; bookId: string; type: 'Borrow' | 'Renewal'; loanId?: string; requestedOn: string; status: 'Pending' | 'Approved' | 'Rejected'; reason?: string }
+export interface LibraryRequest { id: string; studentId: string; bookId: string; type: 'Borrow' | 'Renewal'; loanId?: string | undefined; requestedOn: string; status: 'Pending' | 'Approved' | 'Rejected'; reason?: string | undefined }
 export interface Activity { id: string; date: string; text: string }
 export interface LibraryState { books: Book[]; loans: Loan[]; requests: LibraryRequest[]; activity: Activity[]; saved: string[] }
 export const students = [student, ...Array.from({ length: 23 }, (_, i) => ({ name: ['Maya Patel', 'Liam Chen', 'Aisha Khan', 'Noah Williams', 'Sofia Roy', 'Arjun Sharma', 'Emma Wilson', 'Ethan Das', 'Olivia Brown', 'Rohan Gupta', 'Isabella Lee', 'Daniel Singh', 'Zara Ahmed', 'Lucas Martin', 'Ananya Rao', 'Leo Thomas', 'Nina Bose', 'Oscar Jones', 'Meera Sen', 'Adam Clark', 'Sara Ali', 'James Park', 'Isha Verma'][i] ?? 'Sample Student', first: 'Student', id: `STU-${20482 + i}`, program: ['B.Sc. Computer Science, Year 2', 'B.Sc. Physics, Year 3', 'B.Com., Year 1', 'B.Sc. Mathematics, Year 2'][i % 4] ?? 'Undergraduate', email: `student${i + 2}@example.edu` }))];

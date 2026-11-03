@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DashboardShell, PageHeader } from "@/components/shelf/DashboardShell";
 import { student } from "@/data/sample-library";
+import { useLibrary } from '@/components/shelf/LibraryProvider';
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/profile")({
 });
 
 function Profile() {
+  const { state } = useLibrary();
   const rows = [["Student ID", student.id], ["Programme", student.program], ["Email", student.email], ["Books read", "12 this year"]];
   return (
     <DashboardShell>
@@ -31,6 +33,12 @@ function Profile() {
               <div key={k} className="rounded-xl bg-muted p-4"><dt className="text-xs text-muted-foreground">{k}</dt><dd className="font-medium">{v}</dd></div>
             ))}
           </dl>
+          <h3 className="mb-3 mt-6 font-semibold">Saved reading list · {state.saved.length}</h3>
+          {state.saved.map(id => { const b = state.books.find(b => b.id === id); return b ? <p key={id} className="border-b py-3 text-sm">{b.title} · {b.author}</p> : null; })}
+          {!state.saved.length && <p className="text-sm text-muted-foreground">No saved books yet.</p>}
+          <h3 className="mb-3 mt-6 font-semibold">Returned in this demo session</h3>
+          {state.loans.filter(l => l.studentId === student.id && l.returnedOn).map(l => <p key={l.id} className="border-b py-3 text-sm">{state.books.find(b => b.id === l.bookId)?.title ?? 'Removed title'} · Returned {l.returnedOn}</p>)}
+          {!state.loans.some(l => l.studentId === student.id && l.returnedOn) && <p className="text-sm text-muted-foreground">No returns recorded in this session.</p>}
         </div>
       </div>
     </DashboardShell>

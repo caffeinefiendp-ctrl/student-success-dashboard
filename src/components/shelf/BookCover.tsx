@@ -19,13 +19,15 @@ export function BookCover({ book, className }: { book: Book; className?: string 
     );
   }
   return (
-    <div className={cn("relative flex h-full w-full flex-col justify-between overflow-hidden bg-navy p-5 text-navy-foreground", className)}>
-      <span className="relative border-b border-navy-foreground/30 pb-4 text-[10px] font-semibold uppercase opacity-80">{book.category} · {book.edition}</span>
-      <div className="relative">
-        <p className="break-words text-lg font-extrabold leading-tight">{book.title}</p>
-        <p className="mt-3 text-xs font-medium opacity-80">{book.author}</p>
+    <div className={cn("@container relative h-full w-full overflow-hidden bg-navy text-navy-foreground", className)}>
+      <div className="flex h-full flex-col justify-between gap-2 p-5 @max-[120px]:gap-1 @max-[120px]:p-2">
+      <span className="relative border-b border-navy-foreground/30 pb-4 text-[10px] font-semibold uppercase opacity-80 @max-[120px]:pb-1 @max-[120px]:text-[6px]">{book.category} · {book.edition}</span>
+      <div className="relative min-h-0">
+        <p className="break-words text-lg font-extrabold leading-tight @max-[120px]:text-[9px]">{book.title}</p>
+        <p className="mt-3 text-xs font-medium opacity-80 @max-[120px]:mt-1 @max-[120px]:text-[6px]">{book.author}</p>
       </div>
-      <span className="text-[10px] opacity-70">ShelfSense · {book.id}</span>
+      <span className="break-all text-[10px] opacity-70 @max-[120px]:hidden">ShelfSense · {book.id}</span>
+      </div>
     </div>
   );
 }
