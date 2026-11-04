@@ -40,6 +40,14 @@ import cover37 from "@/assets/catalogue/sapiens.jpg";
 import cover38 from "@/assets/catalogue/factfulness.jpg";
 import cover39 from "@/assets/catalogue/short-history.jpg";
 
+import assetArtElectronics from "@/assets/catalogue/art-electronics.asset.json";
+
+import assetMicroelectronicCircuits from "@/assets/catalogue/microelectronic-circuits.asset.json";
+
+import assetPridePrejudice from "@/assets/catalogue/pride-prejudice.asset.json";
+
+import assetNineteenEightyFour from "@/assets/catalogue/nineteen-eighty-four.asset.json";
+
 export type Availability = "Available" | "Limited" | "Waitlist";
 export interface Book {
   id: string; title: string; author: string; category: string; edition: string;
@@ -91,10 +99,10 @@ export const books: Book[] = [
 ];
 
 books.push(
-  { id: 'art-electronics', title: 'The Art of Electronics', author: 'Paul Horowitz and Winfield Hill', category: 'Electronics', edition: '3rd', isbn: '9780521809269', availability: 'Available', cover: 'https://covers.openlibrary.org/b/isbn/9780521809269-L.jpg?default=false', availableCopies: 4, totalCopies: 4, floor: 3, section: 'Electronics', rack: 'EL-01', shelf: '621.381 HOR', year: 2015, pages: 1220, rating: 4.8, description: 'A practical reference for analog and digital circuit design, sensors and instrumentation.', keywords: ['circuits', 'electronics', 'engineering', 'analog'] },
-  { id: 'microelectronic-circuits', title: 'Microelectronic Circuits', author: 'Adel S. Sedra and Kenneth C. Smith', category: 'Electronics', edition: '7th', isbn: '9780199339136', availability: 'Available', cover: 'https://covers.openlibrary.org/b/isbn/9780199339136-L.jpg?default=false', availableCopies: 3, totalCopies: 3, floor: 3, section: 'Electronics', rack: 'EL-01', shelf: '621.381 SED', year: 2015, pages: 1488, rating: 4.6, description: 'Semiconductors, amplifiers, integrated circuits and digital logic with design examples.', keywords: ['transistors', 'circuits', 'digital', 'electronics'] },
-  { id: 'pride-prejudice', title: 'Pride and Prejudice', author: 'Jane Austen', category: 'Literature', edition: 'Penguin Classics', isbn: '9780141439518', availability: 'Available', cover: 'https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg?default=false', availableCopies: 3, totalCopies: 3, floor: 0, section: 'Literature', rack: 'LT-01', shelf: '823 AUS', year: 2003, pages: 480, rating: 4.7, description: 'Elizabeth Bennet navigates family expectations, social class and love in Regency England.', keywords: ['fiction', 'classics', 'novel', 'romance'] },
-  { id: 'nineteen-eighty-four', title: 'Nineteen Eighty-Four', author: 'George Orwell', category: 'Literature', edition: 'Penguin Modern Classics', isbn: '9780141187761', availability: 'Available', cover: 'https://covers.openlibrary.org/b/isbn/9780141187761-L.jpg?default=false', availableCopies: 2, totalCopies: 2, floor: 0, section: 'Literature', rack: 'LT-01', shelf: '823 ORW', year: 2004, pages: 400, rating: 4.8, description: 'A dystopian novel exploring surveillance, propaganda, power and individual freedom.', keywords: ['fiction', 'dystopia', 'classics', 'novel'] },
+  { id: 'art-electronics', title: 'The Art of Electronics', author: 'Paul Horowitz and Winfield Hill', category: 'Electronics', edition: '3rd', isbn: '9780521809269', availability: 'Available', cover: assetArtElectronics.url, availableCopies: 4, totalCopies: 4, floor: 3, section: 'Electronics', rack: 'EL-01', shelf: '621.381 HOR', year: 2015, pages: 1220, rating: 4.8, description: 'A practical reference for analog and digital circuit design, sensors and instrumentation.', keywords: ['circuits', 'electronics', 'engineering', 'analog'] },
+  { id: 'microelectronic-circuits', title: 'Microelectronic Circuits', author: 'Adel S. Sedra and Kenneth C. Smith', category: 'Electronics', edition: '7th', isbn: '9780199339136', availability: 'Available', cover: assetMicroelectronicCircuits.url, availableCopies: 3, totalCopies: 3, floor: 3, section: 'Electronics', rack: 'EL-01', shelf: '621.381 SED', year: 2015, pages: 1488, rating: 4.6, description: 'Semiconductors, amplifiers, integrated circuits and digital logic with design examples.', keywords: ['transistors', 'circuits', 'digital', 'electronics'] },
+  { id: 'pride-prejudice', title: 'Pride and Prejudice', author: 'Jane Austen', category: 'Literature', edition: 'Penguin Classics', isbn: '9780141439518', availability: 'Available', cover: assetPridePrejudice.url, availableCopies: 3, totalCopies: 3, floor: 0, section: 'Literature', rack: 'LT-01', shelf: '823 AUS', year: 2003, pages: 480, rating: 4.7, description: 'Elizabeth Bennet navigates family expectations, social class and love in Regency England.', keywords: ['fiction', 'classics', 'novel', 'romance'] },
+  { id: 'nineteen-eighty-four', title: 'Nineteen Eighty-Four', author: 'George Orwell', category: 'Literature', edition: 'Penguin Modern Classics', isbn: '9780141187761', availability: 'Available', cover: assetNineteenEightyFour.url, availableCopies: 2, totalCopies: 2, floor: 0, section: 'Literature', rack: 'LT-01', shelf: '823 ORW', year: 2004, pages: 400, rating: 4.8, description: 'A dystopian novel exploring surveillance, propaganda, power and individual freedom.', keywords: ['fiction', 'dystopia', 'classics', 'novel'] },
 );
 
 export const catalogueCategories = [...new Set(books.map((book) => book.category))];
