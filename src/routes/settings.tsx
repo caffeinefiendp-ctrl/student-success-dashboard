@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { DashboardShell, PageHeader } from "@/components/shelf/DashboardShell";
 import { Switch } from "@/components/ui/switch";
+import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute("/settings")({
   head: () => ({
@@ -24,6 +25,8 @@ const options = [
 ];
 
 function SettingsPage() {
+  const [preferences, setPreferences] = useState<Record<string, boolean>>({});
+  useEffect(() => { try { setPreferences(JSON.parse(sessionStorage.getItem('shelfsense-preferences') ?? '{}')); } catch { toast('Demo preferences could not be restored.'); } }, []);
   return (
     <DashboardShell>
       <PageHeader title="Settings" subtitle="Notification and reading preferences" />
@@ -31,7 +34,7 @@ function SettingsPage() {
         {options.map((o) => (
           <label key={o.k} className="flex cursor-pointer items-center justify-between gap-4 p-5">
             <span><span className="block font-medium">{o.k}</span><span className="text-sm text-muted-foreground">{o.d}</span></span>
-            <Switch defaultChecked={o.on} onCheckedChange={(v) => toast(`${o.k} ${v ? "on" : "off"}`)} />
+            <Switch checked={preferences[o.k] ?? o.on} onCheckedChange={(v) => { const next = { ...preferences, [o.k]: v }; setPreferences(next); try { sessionStorage.setItem('shelfsense-preferences', JSON.stringify(next)); } catch { toast('Preference will only last until this page closes.'); } toast(`${o.k} ${v ? 'on' : 'off'} (demo preference)`); }} />
           </label>
         ))}
       </div>
