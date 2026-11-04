@@ -1,8 +1,8 @@
-# Connected ShelfSense demo
-- [x] Create shared session demo inventory, loans, requests and activity.
-- [x] Complete student discovery, loans, requests and assistant interactions.
-- [x] Add separate librarian overview, inventory, circulation, requests, students and reports.
-- [x] Preserve appearance and add demo role switching and distinct covers.
-- [x] Test inventory rules and verify connected flows and responsive pages.
+# ShelfSense improvement roadmap
 
-Demo scope: Changes persist within the browser tab session. AI responses, role switching, reminders and library records are simulated; no hosted library, university, Switch, authentication or notification integrations are connected.
+- [x] Reproduce AI Assistant page error — page loads and chat works; no console/page errors (stale build issue)
+- [ ] Book covers: fetch real covers from Open Library by ISBN for all 44 books; keep distinct generated fallback where no real cover exists
+- [ ] Student dashboard visual polish (hero, stats cards, recommended section) — keep layout/theme
+- [ ] Discover page polish (cards, hover, category nav, details view)
+- [ ] Librarian dashboard visual consistency (inventory table, add/edit book, issue/return, requests)
+- [ ] Final quality check: all routes, responsive, images, console errors

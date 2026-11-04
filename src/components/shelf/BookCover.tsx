@@ -7,15 +7,18 @@ export function BookCover({ book, className }: { book: Book; className?: string 
   const [failed, setFailed] = useState('');
   if (book.cover && failed !== book.cover) {
     return (
-      <img
-        src={book.cover}
-        onError={() => setFailed(book.cover)}
-        alt={`Cover of ${book.title}`}
-        loading="lazy"
-        width={672}
-        height={992}
-        className={cn("h-full w-full object-contain", className)}
-      />
+      <div className={cn("relative h-full w-full overflow-hidden bg-navy", className)}>
+        <img src={book.cover} alt="" aria-hidden loading="lazy" className="absolute inset-0 h-full w-full scale-125 object-cover opacity-45 blur-md" />
+        <img
+          src={book.cover}
+          onError={() => setFailed(book.cover)}
+          alt={`Cover of ${book.title}`}
+          loading="lazy"
+          width={672}
+          height={992}
+          className="relative h-full w-full object-contain drop-shadow-lg"
+        />
+      </div>
     );
   }
   return (

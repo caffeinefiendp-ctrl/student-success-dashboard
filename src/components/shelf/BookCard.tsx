@@ -41,6 +41,13 @@ export function BookCard({ book }: { book: Book }) {
           <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
             <BookCover book={book} />
           </div>
+          <button
+            onClick={() => setOpen(true)}
+            aria-label={`View details of ${book.title}`}
+            className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-navy/85 via-navy/20 to-transparent pb-5 opacity-0 transition-opacity duration-300 focus-visible:opacity-100 group-hover:opacity-100"
+          >
+            <span className="rounded-full bg-card px-4 py-1.5 text-xs font-semibold text-foreground shadow-lift">View Details</span>
+          </button>
           <Button
             variant="ghost"
             size="icon"
