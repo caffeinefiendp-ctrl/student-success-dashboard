@@ -29,7 +29,9 @@ function Assistant() {
   const end = useRef<HTMLDivElement>(null);
   const [msgs, setMsgs] = useState<Msg[]>([{ role: "ai", text: "Hi Alex! I’m your library assistant (demo). Ask me for book suggestions on any topic." }]);
   const [text, setText] = useState("");
-  useEffect(() => end.current?.scrollIntoView({ block: 'nearest' }), [msgs]);
+  useEffect(() => {
+    end.current?.scrollIntoView({ block: 'nearest' });
+  }, [msgs]);
   const send = (q: string) => {
     if (!q.trim()) return;
     const lastAnswer = msgs.slice().reverse().find(m => m.role === 'ai' && m.text.includes('“'));
