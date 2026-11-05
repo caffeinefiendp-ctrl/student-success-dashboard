@@ -1,8 +1,8 @@
 # ShelfSense improvement roadmap
 
 - [x] Reproduce AI Assistant page error — page loads and chat works; no console/page errors (stale build issue)
-- [ ] Book covers: fetch real covers from Open Library by ISBN for all 44 books; keep distinct generated fallback where no real cover exists
-- [ ] Student dashboard visual polish (hero, stats cards, recommended section) — keep layout/theme
-- [ ] Discover page polish (cards, hover, category nav, details view)
-- [ ] Librarian dashboard visual consistency (inventory table, add/edit book, issue/return, requests)
-- [ ] Final quality check: all routes, responsive, images, console errors
+- [x] Book covers: real Open Library covers by verified ISBN for all 44 books, served from CDN with blurred-backdrop rendering and typographic fallback
+- [x] Student dashboard visual polish (stats cards, recommended cards with rating/edition, hover details overlay) — layout/theme preserved
+- [x] Discover page polish (category pill counts, ISBN + location in details view)
+- [x] Librarian dashboard visual consistency (inventory table, overview stat cards, issue/return and requests cards)
+- [x] Final quality check: 13 routes OK, no broken images, no console errors, search/filters/details/role-switch verified, no mobile overflow, 30 tests pass

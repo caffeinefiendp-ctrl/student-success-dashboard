@@ -15,3 +15,4 @@
 - Use LibraryProvider and the pure library-state transitions for all demo inventory, circulation, requests and activity; session storage preserves frontend-only changes without claiming hosted persistence.
 - Keep librarian screens in dedicated /librarian routes using the existing DashboardShell with a separate menu; demo switching is not authentication or a permission boundary.
 - Derive availability from copy counts and keep total minus available equal to active loans; validate transitions atomically to prevent contradictory demo records.
+- Book covers are CDN asset pointers in src/assets/catalogue/covers fetched from Open Library by verified ISBN; BookCover renders them object-contain over a blurred self-backdrop with a typographic fallback, so new books need only a cover URL or none.
