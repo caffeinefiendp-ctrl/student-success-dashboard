@@ -59,17 +59,21 @@ function Discover() {
         <Button type="submit" className="rounded-xl px-5">Search</Button>
       </form>
       <div className="mt-4 flex flex-wrap gap-2">
-        {[undefined, ...catalogueCategories].map((c) => (
-          <Button
-            variant={category === c ? "default" : "outline"}
-            aria-pressed={category === c}
-            key={c ?? "all"}
-            onClick={() => navigate({ search: (p) => ({ ...p, category: c }) })}
-            className={cn("rounded-full border px-4 py-1.5 text-sm font-medium transition", category === c ? "border-primary bg-primary text-primary-foreground" : "bg-card hover:bg-muted")}
-          >
-            {c ?? "All"}
-          </Button>
-        ))}
+        {[undefined, ...catalogueCategories].map((c) => {
+          const count = c ? books.filter((b) => b.category === c).length : books.length;
+          return (
+            <Button
+              variant={category === c ? "default" : "outline"}
+              aria-pressed={category === c}
+              key={c ?? "all"}
+              onClick={() => navigate({ search: (p) => ({ ...p, category: c }) })}
+              className={cn("rounded-full border px-4 py-1.5 text-sm font-medium transition", category === c ? "border-primary bg-primary text-primary-foreground" : "bg-card hover:bg-muted")}
+            >
+              {c ?? "All"}
+              <span className={cn("ml-1.5 rounded-full px-1.5 text-xs", category === c ? "bg-primary-foreground/20" : "bg-muted text-muted-foreground")}>{count}</span>
+            </Button>
+          );
+        })}
       </div>
       <div className="mt-4 flex flex-wrap items-center gap-3">
         <Select value={availability || "all"} onValueChange={(value) => navigate({ search: (p) => ({ ...p, availability: value === "all" ? undefined : value }) })}>

@@ -91,9 +91,12 @@ function Overview() {
       {/* Stats */}
       <section className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {stats.map((s, i) => (
-          <Link key={s.label} to={s.to} className="card-lift rounded-2xl border bg-card p-5 shadow-card">
-            <div className={cn("grid h-11 w-11 place-items-center rounded-xl", s.tone)}>
-              <s.icon className="h-5 w-5" />
+          <Link key={s.label} to={s.to} className="card-lift group rounded-2xl border bg-card p-5 shadow-card hover:border-primary/40">
+            <div className="flex items-start justify-between">
+              <div className={cn("grid h-11 w-11 place-items-center rounded-xl", s.tone)}>
+                <s.icon className="h-5 w-5" />
+              </div>
+              <ArrowRight className="h-4 w-4 -rotate-45 text-muted-foreground opacity-0 transition group-hover:opacity-100" />
             </div>
             <p className="mt-4 text-3xl font-extrabold tracking-tight">{statValues[i]}</p>
             <p className="text-sm text-muted-foreground">{s.label}</p>
