@@ -65,6 +65,11 @@ export function BookCard({ book }: { book: Book }) {
           <span className="text-xs font-semibold uppercase tracking-wider text-primary">{book.category}</span>
           <h3 className="line-clamp-2 font-semibold leading-snug">{book.title}</h3>
           <p className="line-clamp-1 text-sm text-muted-foreground">{book.author}</p>
+          <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <Star className="h-3.5 w-3.5 fill-warning text-warning" />
+            <span className="font-semibold text-foreground">{book.rating}</span>
+            <span>· {book.edition} ed. · {book.year}</span>
+          </p>
           <p className="text-xs text-muted-foreground">{book.availableCopies} of {book.totalCopies} copies available</p>
           <p className="flex items-start gap-1 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5 shrink-0" />{floorLabel(book.floor)} · Rack {book.rack}</p>
           <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
@@ -92,6 +97,7 @@ export function BookCard({ book }: { book: Book }) {
                 <div><dt className="text-muted-foreground">Published</dt><dd className="font-medium">{book.year}</dd></div>
                 <div><dt className="text-muted-foreground">Pages</dt><dd className="font-medium">{book.pages}</dd></div>
                 <div><dt className="text-muted-foreground">Book ID</dt><dd className="break-words font-medium">{book.id}</dd></div>
+                {book.isbn && <div><dt className="text-muted-foreground">ISBN</dt><dd className="break-words font-medium">{book.isbn}</dd></div>}
                 <div><dt className="text-muted-foreground">Rating</dt><dd className="flex items-center gap-1 font-medium"><Star className="h-3.5 w-3.5 fill-warning text-warning" />{book.rating}</dd></div>
               </dl>
               <div className="space-y-2 border-y py-3 text-sm">
