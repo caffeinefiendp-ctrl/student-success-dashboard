@@ -50,7 +50,7 @@ function MyBooks() {
                 <p className="mt-2 text-xs text-muted-foreground">Borrowed {l.issueDate} · Due <span className="font-semibold text-foreground">{l.dueDate}</span> · {daysLeft < 0 ? `${-daysLeft} days overdue` : `${daysLeft} days left`}</p>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" disabled={renewal} onClick={() => act({ type: "request", bookId: b.id, studentId: student.id, loanId: l.id }, "Renewal sent to the demo librarian")}>{renewal ? "Renewal pending" : "Renew"}</Button>
+                <Button variant="outline" disabled={renewal} onClick={() => act({ type: "request", bookId: b.id, studentId: student.id, loanId: l.id }, "Demo renewal saved. Copy its room message from My Requests for manual AI review.")}>{renewal ? "Renewal pending" : "Renew"}</Button>
                 <Button variant="secondary" onClick={() => act({ type: "remind", loanId: l.id }, l.reminder ? "Demo reminder removed" : "Demo return reminder saved")}>{l.reminder ? "Reminder set" : "Remind me"}</Button>
               </div>
             </div>

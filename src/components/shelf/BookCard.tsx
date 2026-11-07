@@ -31,7 +31,7 @@ export function BookCard({ book }: { book: Book }) {
   const saved = state.saved.includes(book.id);
 
   const request = () => {
-    if (act({ type: 'request', bookId: book.id, studentId: student.id }, 'Borrow request sent to the demo librarian')) setOpen(false);
+    if (act({ type: 'request', bookId: book.id, studentId: student.id }, 'Demo request saved. Copy its room message from My Requests for manual AI review.')) setOpen(false);
   };
 
   return (
@@ -113,7 +113,7 @@ export function BookCard({ book }: { book: Book }) {
                 <div className="space-y-1"><AvailabilityBadge value={book.availability} /><p className="text-xs text-muted-foreground">{book.availableCopies} of {book.totalCopies} copies available</p></div>
                 <Button onClick={request}>{book.availability === "Waitlist" ? "Join Waitlist" : "Request to Borrow"}</Button>
               </div>
-              {book.availableCopies === 0 && <div className="border-t pt-3"><p className="text-sm font-semibold">Available alternatives</p>{state.books.filter(b => b.category === book.category && b.availableCopies > 0 && b.id !== book.id).slice(0, 3).map(b => <div key={b.id} className="mt-2 flex items-center justify-between gap-2 text-xs"><span>{b.title} · {b.availableCopies} available · Rack {b.rack}</span><Button size="sm" variant="outline" onClick={() => act({ type: 'request', bookId: b.id, studentId: student.id }, 'Alternative book requested')}>Request</Button></div>)}{!state.books.some(b => b.category === book.category && b.availableCopies > 0) && <p className="text-xs text-muted-foreground">No available alternatives in this category.</p>}</div>}
+              {book.availableCopies === 0 && <div className="border-t pt-3"><p className="text-sm font-semibold">Available alternatives</p>{state.books.filter(b => b.category === book.category && b.availableCopies > 0 && b.id !== book.id).slice(0, 3).map(b => <div key={b.id} className="mt-2 flex items-center justify-between gap-2 text-xs"><span>{b.title} · {b.availableCopies} available · Rack {b.rack}</span><Button size="sm" variant="outline" onClick={() => act({ type: 'request', bookId: b.id, studentId: student.id }, 'Demo request saved. Copy its room message from My Requests for manual AI review.')}>Request</Button></div>)}{!state.books.some(b => b.category === book.category && b.availableCopies > 0) && <p className="text-xs text-muted-foreground">No available alternatives in this category.</p>}</div>}
               <p className="text-xs text-muted-foreground">Fictional demonstration inventory — copies, availability and shelf locations are not real-time library information. Some cover artwork is illustrative.</p>
             </div>
           </div>

@@ -165,7 +165,7 @@ function Overview() {
               <p className="mt-2 text-xs text-muted-foreground">{pct}% of loan period used</p>
             </div>
             <div className="mt-5 grid grid-cols-2 gap-2">
-              <Button variant="outline" disabled={state.requests.some(r => r.loanId === loan.id && r.status === "Pending")} onClick={() => act({ type: "request", bookId: loan.bookId, studentId: student.id, loanId: loan.id }, "Renewal requested")}>Renew</Button>
+              <Button variant="outline" disabled={state.requests.some(r => r.loanId === loan.id && r.status === "Pending")} onClick={() => act({ type: "request", bookId: loan.bookId, studentId: student.id, loanId: loan.id }, "Demo renewal saved. Copy its room message from My Requests for manual AI review.")}>Renew</Button>
               <Button onClick={() => navigate({ to: "/my-books" })}>View loans</Button>
             </div>
           </div> : <p className="py-8 text-muted-foreground">No upcoming returns.</p>}
